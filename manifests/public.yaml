@@ -198,6 +198,8 @@ spec:
     - mountPath: /srv/pillar
       name: public-cloud-config
       readOnly: True
+    - mountPath: /var/log
+      name: salt-master-logs
   - name: salt-api
     image: sles12/salt-api:__TAG__
     volumeMounts:
@@ -595,3 +597,7 @@ spec:
   - name: yast-keyboard-configuration
     hostPath:
       path: /etc/sysconfig/keyboard
+  - name: salt-master-logs
+    hostPath:
+      path: /var/log/salt-master
+      type: DirectoryOrCreate
