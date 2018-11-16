@@ -163,6 +163,7 @@ ln -s %{_sbindir}/service %{buildroot}/%{_sbindir}/rcadmin-node-setup
 %dir /etc/caasp
 %dir /etc/caasp/haproxy
 %config(noreplace) /etc/caasp/haproxy/haproxy.cfg
+%config(noreplace) %{_datadir}/%{name}/config/registry/registry-config.yaml
 %{_sbindir}/rcadmin-node-setup
 %{_unitdir}/admin-node-init.service
 %{_unitdir}/admin-node-setup.service
