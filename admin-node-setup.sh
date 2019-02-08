@@ -26,6 +26,19 @@ if [ ! -d $manifest_dir ]; then
     exit -2
 fi
 
+# If the configuration file contains the statement:
+#
+# --pod-manifest-path=/etc/kubernetes/kubelet-config.yaml
+#
+# It was updated by the admin-setup.sh script incorrectly. In that case we
+# have to replace the `--pod-manifest-path` with `--config` again
+# Details: https://bugzilla.suse.com/show_bug.cgi?id=1124187
+# TODO: Remove with v4 release when no longer needed.
+if grep -q -- '--pod-manifest-path=/etc/kubernetes/kubelet-config.yaml' /etc/kubernetes/kubelet ; then
+    echo "Fixing pod-manifests-path to config in kubelet file"
+    sed -i 's/--pod-manifest-path/--config/g' /etc/kubernetes/kubelet
+fi
+
 # We disable the servers of the kubelet as those are not needed on the admin node
 source $kubelet_config
 SERVER_DISABLED=false
